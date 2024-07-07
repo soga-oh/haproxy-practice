@@ -9,7 +9,13 @@ services:
     depends_on:
       - backend1
       - backend2
-    network_mode: "host"
+    #network_mode: "host"
+    privileged: true
+    networks:
+      haproxy_net:
+        ipv4_address: 172.26.0.10
+    #ports:
+    #  - "81:80"
 
   haproxy2:
     build:
@@ -21,7 +27,13 @@ services:
     depends_on:
       - backend1
       - backend2
-    network_mode: "host"
+    #network_mode: "host"
+    privileged: true
+    networks:
+      haproxy_net:
+        ipv4_address: 172.26.0.11
+    #ports:
+    #  - "82:80"
 
   backend1:
     build:
