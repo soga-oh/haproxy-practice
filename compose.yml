@@ -1,0 +1,48 @@
+services:
+  haproxy1:
+    build:
+      context: ./haproxy
+      dockerfile: Dockerfile
+    container_name: haproxy1
+    volumes:
+      - ./haproxy/keepalived-master.conf:/etc/keepalived/keepalived.conf
+    depends_on:
+      - backend1
+      - backend2
+    network_mode: "host"
+
+  haproxy2:
+    build:
+      context: ./haproxy
+      dockerfile: Dockerfile
+    container_name: haproxy2
+    volumes:
+      - ./haproxy/keepalived-backup.conf:/etc/keepalived/keepalived.conf
+    depends_on:
+      - backend1
+      - backend2
+    network_mode: "host"
+
+  backend1:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend1
+    networks:
+      - haproxy_net
+    ports:
+      - "8081:80"
+
+  backend2:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: backend2
+    networks:
+      - haproxy_net
+    ports:
+      - "8082:80"
+
+networks:
+  haproxy_net:
+    driver: bridge
