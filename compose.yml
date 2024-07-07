@@ -29,7 +29,8 @@ services:
       dockerfile: Dockerfile
     container_name: backend1
     networks:
-      - haproxy_net
+      haproxy_net:
+        ipv4_address: 172.26.0.3
     ports:
       - "8081:80"
 
@@ -39,10 +40,14 @@ services:
       dockerfile: Dockerfile
     container_name: backend2
     networks:
-      - haproxy_net
+      haproxy_net:
+        ipv4_address: 172.26.0.2
     ports:
       - "8082:80"
 
 networks:
   haproxy_net:
     driver: bridge
+    ipam:
+      config:
+        - subnet: 172.26.0.0/24
