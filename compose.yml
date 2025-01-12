@@ -16,6 +16,7 @@ services:
         ipv4_address: 172.26.0.10
     #ports:
     #  - "81:80"
+    #restart: unless-stopped
 
   haproxy2:
     build:
@@ -34,6 +35,7 @@ services:
         ipv4_address: 172.26.0.11
     #ports:
     #  - "82:80"
+    #restart: unless-stopped
 
   backend1:
     build:
